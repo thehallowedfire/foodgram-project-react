@@ -60,20 +60,19 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         favorite_recipe = Favorite.objects.filter(user=user, recipe=recipe)
 
-        match request.method:
-            case 'POST':
-                if favorite_recipe.exists():
-                    data = {'errors': 'Recipe is already in favorites!'}
-                else:
-                    Favorite.objects.create(user=user, recipe=recipe)
-                    data = RecipeMinifiedSerializer(recipe).data
-                    response_status = status.HTTP_201_CREATED
-            case 'DELETE':
-                if favorite_recipe.exists():
-                    favorite_recipe.delete()
-                    response_status = status.HTTP_204_NO_CONTENT
-                else:
-                    data = {'errors': 'Recipe is not in favorites!'}
+        if request.method == 'POST':
+            if favorite_recipe.exists():
+                data = {'errors': 'Recipe is already in favorites!'}
+            else:
+                Favorite.objects.create(user=user, recipe=recipe)
+                data = RecipeMinifiedSerializer(recipe).data
+                response_status = status.HTTP_201_CREATED
+        elif request.method == 'DELETE':
+            if favorite_recipe.exists():
+                favorite_recipe.delete()
+                response_status = status.HTTP_204_NO_CONTENT
+            else:
+                data = {'errors': 'Recipe is not in favorites!'}
         return JsonResponse(data=data, status=response_status)
 
     @action(detail=True, methods=['POST', 'DELETE'], url_path='shopping_cart')

@@ -34,24 +34,22 @@ class CustomUserViewSet(UserViewSet):
         data = {}
         response_status = status.HTTP_400_BAD_REQUEST
 
-        match request.method:
-            case 'POST':
-                if user == author:
-                    data = {'errors': 'Can not subscribe to yourself!'}
-                elif subscription.exists():
-                    data = {'errors': 'Already subscribed to this user!'}
-                else:
-                    CustomUserSubscribe.objects.create(user=user,
-                                                       author=author)
-                    data = AuthorWithRecipesSerializer(
-                        author, context={'request': request}).data
-                    response_status = status.HTTP_201_CREATED
-            case 'DELETE':
-                if not subscription.exists():
-                    data = {'errors': 'You are not subscribed to this user!'}
-                else:
-                    subscription.delete()
-                    response_status = status.HTTP_204_NO_CONTENT
+        if request.method == 'POST':
+            if user == author:
+                data = {'errors': 'Can not subscribe to yourself!'}
+            elif subscription.exists():
+                data = {'errors': 'Already subscribed to this user!'}
+            else:
+                CustomUserSubscribe.objects.create(user=user, author=author)
+                data = AuthorWithRecipesSerializer(
+                    author, context={'request': request}).data
+                response_status = status.HTTP_201_CREATED
+        elif request.method == 'DELETE':
+            if not subscription.exists():
+                data = {'errors': 'You are not subscribed to this user!'}
+            else:
+                subscription.delete()
+                response_status = status.HTTP_204_NO_CONTENT
 
         return JsonResponse(data=data, status=response_status)
 
