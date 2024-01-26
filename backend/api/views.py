@@ -28,8 +28,8 @@ User = get_user_model()
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['^name',]
+    filter_backends = [filters.SearchFilter, ]
+    search_fields = ['^name', ]
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -42,9 +42,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
                                    .prefetch_related('tags', 'ingredients')
     serializer_class = RecipeSerializer
     pagination_class = RecipesPagination
-    filter_backends = [DjangoFilterBackend,]
+    filter_backends = [DjangoFilterBackend, ]
     filterset_class = RecipeFilterSet
-    permission_classes = [IsAuthorOrReadOnly,]
+    permission_classes = [IsAuthorOrReadOnly, ]
 
     def partial_update(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
