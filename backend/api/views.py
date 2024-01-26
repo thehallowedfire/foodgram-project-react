@@ -86,20 +86,19 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         recipe_in_cart = ShoppingCart.objects.filter(user=user, recipe=recipe)
 
-        match request.method:
-            case 'POST':
-                if recipe_in_cart.exists():
-                    data = {'errors': 'Recipe is already in shopping cart!'}
-                else:
-                    ShoppingCart.objects.create(user=user, recipe=recipe)
-                    data = RecipeMinifiedSerializer(recipe).data
-                    response_status = status.HTTP_201_CREATED
-            case 'DELETE':
-                if recipe_in_cart.exists():
-                    recipe_in_cart.delete()
-                    response_status = status.HTTP_204_NO_CONTENT
-                else:
-                    data = {'errors': 'Recipe is not in shopping cart!'}
+        if request.method == 'POST':
+            if recipe_in_cart.exists():
+                data = {'errors': 'Recipe is already in shopping cart!'}
+            else:
+                ShoppingCart.objects.create(user=user, recipe=recipe)
+                data = RecipeMinifiedSerializer(recipe).data
+                response_status = status.HTTP_201_CREATED
+        elif request.method == 'DELETE':
+            if recipe_in_cart.exists():
+                recipe_in_cart.delete()
+                response_status = status.HTTP_204_NO_CONTENT
+            else:
+                data = {'errors': 'Recipe is not in shopping cart!'}
         return JsonResponse(data, status=response_status)
 
     @action(detail=False, methods=['GET'], url_path='cart')
