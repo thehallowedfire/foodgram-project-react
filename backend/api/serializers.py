@@ -9,18 +9,10 @@ from rest_framework import serializers
 from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag
 
 from .constants import DEFAULT_RECIPES_PAGE_SIZE_ON_SUB
+from .utils import add_ingredients_to_recipe
 
 
 User = get_user_model()
-
-
-def add_ingredients_to_recipe(recipe: Recipe,
-                              ingredients: list[Ingredient]) -> None:
-    ingredients_list = [RecipeIngredient(recipe=recipe,
-                                         ingredient_id=ingredient['id'],
-                                         amount=ingredient['amount'])
-                        for ingredient in ingredients]
-    RecipeIngredient.objects.bulk_create(ingredients_list)
 
 
 class Base64ImageField(serializers.ImageField):
