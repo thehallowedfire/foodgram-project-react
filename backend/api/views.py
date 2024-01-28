@@ -57,13 +57,13 @@ class CustomUserViewSet(UserViewSet):
                 data = AuthorWithRecipesSerializer(
                     author, context={'request': request}).data
                 response_status = status.HTTP_201_CREATED
-        elif request.method == 'DELETE':
-            if not subscription.exists():
-                data = {'errors': 'You are not subscribed to this user!'}
-            else:
-                subscription.delete()
-                response_status = status.HTTP_204_NO_CONTENT
+            return JsonResponse(data=data, status=response_status)
 
+        if not subscription.exists():
+            data = {'errors': 'You are not subscribed to this user!'}
+        else:
+            subscription.delete()
+            response_status = status.HTTP_204_NO_CONTENT
         return JsonResponse(data=data, status=response_status)
 
     @action(detail=False, methods=['GET'])
