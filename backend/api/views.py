@@ -10,16 +10,10 @@ from rest_framework.decorators import action
 from .filters import RecipeFilterSet
 from .pagination import RecipesPagination
 from .permissions import IsAuthorOrReadOnly
-from .serializers import RecipeSerializer
-from recipes.models import (Favorite,
-                            Ingredient,
-                            Recipe,
-                            RecipeIngredient,
-                            ShoppingCart,
-                            Tag)
-from recipes.serializers import (IngredientSerializer,
-                                 RecipeMinifiedSerializer,
-                                 TagSerializer)
+from .serializers import (IngredientSerializer, RecipeSerializer,
+                          RecipeMinifiedSerializer, TagSerializer)
+from recipes.models import (Favorite, Ingredient, Recipe,
+                            RecipeIngredient, ShoppingCart, Tag)
 
 
 User = get_user_model()
