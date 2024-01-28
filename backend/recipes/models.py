@@ -44,7 +44,7 @@ class Recipe(models.Model):
     image = models.ImageField(upload_to='recipes/images/', default=None)
     ingredients = models.ManyToManyField(to=Ingredient,
                                          through='RecipeIngredient',
-                                         related_name='recipe')
+                                         related_name='recipes')
     tags = models.ManyToManyField(to=Tag, related_name='recipe')
 
     class Meta:
