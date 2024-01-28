@@ -6,8 +6,7 @@ from django.db.models import F
 from rest_framework import serializers
 
 from authors.serializers import AuthorSerializer
-from recipes.models import Recipe, RecipeIngredient, Tag, Ingredient
-from recipes.serializers import TagSerializer
+from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
 User = get_user_model()
@@ -31,12 +30,30 @@ class Base64ImageField(serializers.ImageField):
         return super().to_internal_value(data)
 
 
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name', 'measurement_unit']
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'name', 'color', 'slug']
+
+
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
 
     class Meta:
         model = RecipeIngredient
         fields = ['id', 'amount']
+
+
+class RecipeMinifiedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ['id', 'name', 'image', 'cooking_time']
 
 
 class RecipeGetSerializer(serializers.ModelSerializer):
