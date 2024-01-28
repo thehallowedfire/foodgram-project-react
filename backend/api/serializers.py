@@ -60,7 +60,7 @@ class AuthorWithRecipesSerializer(AuthorSerializer):
         fields = AuthorSerializer.Meta.fields + ['recipes_count', 'recipes']
 
     def get_recipes_count(self, obj):
-        return obj.recipe.all().count()
+        return obj.recipes.all().count()
 
     def get_recipes(self, obj):
         recipes_limit: int = DEFAULT_RECIPES_PAGE_SIZE_ON_SUB
@@ -69,7 +69,7 @@ class AuthorWithRecipesSerializer(AuthorSerializer):
             param: str = request.query_params.get('recipes_limit')
             if param and param.isdigit():
                 recipes_limit = int(param)
-        recipes = obj.recipe.all()[:recipes_limit]
+        recipes = obj.recipes.all()[:recipes_limit]
         return RecipeMinifiedSerializer(recipes, many=True).data
 
 

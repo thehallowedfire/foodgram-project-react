@@ -34,7 +34,7 @@ class Tag(models.Model):
 class Recipe(models.Model):
     author = models.ForeignKey(to=User,
                                on_delete=models.CASCADE,
-                               related_name="recipe")
+                               related_name="recipes")
     pub_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=RECIPE_NAME_MAX_LENGTH)
     text = models.TextField(max_length=RECIPE_TEXT_MAX_LENGTH)
