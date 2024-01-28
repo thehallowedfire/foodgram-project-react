@@ -45,7 +45,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(to=Ingredient,
                                          through='RecipeIngredient',
                                          related_name='recipes')
-    tags = models.ManyToManyField(to=Tag, related_name='recipe')
+    tags = models.ManyToManyField(to=Tag, related_name='recipes')
 
     class Meta:
         ordering = ['-pub_date']
