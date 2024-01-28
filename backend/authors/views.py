@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 
 from .models import CustomUserSubscribe
 from .pagination import UsersPagination
-from .serializers import AuthorSerializer, AuthorWithRecipesSerializer
+from api.serializers import AuthorSerializer, AuthorWithRecipesSerializer
 
 
 User = get_user_model()
