@@ -3,6 +3,7 @@ Constants for app 'api'
 """
 
 # pagination.py
+USERS_PAGE_SIZE: int = 10
 RECIPES_PAGE_SIZE: int = 10
 
 # serializers.py
