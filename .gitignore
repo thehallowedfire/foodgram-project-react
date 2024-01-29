@@ -133,6 +133,3 @@ dmypy.json
 .idea
 
 .DS_Store
-
-# Temporary dev files - REMOVE before git pull
-temp_dev_files/
