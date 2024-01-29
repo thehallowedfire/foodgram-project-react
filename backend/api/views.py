@@ -8,6 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
 from rest_framework import filters, status, permissions, viewsets
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .filters import RecipeFilterSet
 from .pagination import UsersPagination, RecipesPagination
@@ -108,28 +109,28 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return JsonResponse(data=data, status=status.HTTP_201_CREATED)
 
     @staticmethod
-    def delete(request, model, id):
+    def remove(request, model, id):
         recipe = get_object_or_404(Recipe, pk=id)
         entry = model.objects.filter(user=request.user, recipe=recipe)
         if not entry.exists():
             data = {'errors': 'The recipe is not in the list!'}
             return JsonResponse(data=data, status=status.HTTP_400_BAD_REQUEST)
         entry.delete()
-        return JsonResponse(data={}, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=['POST', 'DELETE'], url_path='favorite')
     def add_to_favorites(self, request, pk=None):
         if request.method == 'POST':
             return self.add(request, Favorite, pk)
         else:
-            return self.delete(request, Favorite, pk)
+            return self.remove(request, Favorite, pk)
 
     @action(detail=True, methods=['POST', 'DELETE'], url_path='shopping_cart')
     def add_to_shopping_cart(self, request, pk=None):
         if request.method == 'POST':
             return self.add(request, ShoppingCart, pk)
         else:
-            return self.delete(request, ShoppingCart, pk)
+            return self.remove(request, ShoppingCart, pk)
 
     @action(detail=False, methods=['GET'], url_path='cart')
     def shopping_cart(self, request):
