@@ -10,17 +10,18 @@ class Command(BaseCommand):
     help = 'Populate the DB with default ingredients'
 
     def add_arguments(self, parser):
+        default_file_path = (Path(__file__).resolve().parents[4]
+                             / 'backend_static/data/ingredients.json')
         parser.add_argument('filename',
                             type=str,
                             nargs='?',
-                            default='ingredients.json',
+                            default=default_file_path,
                             help='Optional JSON file path')
 
     def handle(self, *args, **options):
-        # By default the file should be in the Django project folder
-        default_file = Path(__file__).resolve().parents[3] / 'ingredients.json'
-        file_name = options.get('filename') or default_file
-
+        # By default the file is in the volume: <root>/backend_static/data/
+        file_name = options.get('filename')
+        self.stdout.write(f'Reading a file: {self.style.NOTICE(file_name)}')
         try:
             with open(file_name, "r", encoding='utf-8') as file:
                 data = json.load(file)
@@ -31,7 +32,7 @@ class Command(BaseCommand):
                 ) for ingredient in data
             ]
             Ingredient.objects.bulk_create(ingredients)
-            message = 'Successfully added ingredients!'
+            message = 'Ingredients have been successfully added!'
             self.stdout.write(self.style.SUCCESS(message))
         except FileNotFoundError:
             raise CommandError(f'File {file_name} does not exist')
