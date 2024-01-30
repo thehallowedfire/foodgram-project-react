@@ -122,15 +122,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def add_to_favorites(self, request, pk=None):
         if request.method == 'POST':
             return self.add(request, Favorite, pk)
-        else:
-            return self.remove(request, Favorite, pk)
+        return self.remove(request, Favorite, pk)
 
     @action(detail=True, methods=['POST', 'DELETE'], url_path='shopping_cart')
     def add_to_shopping_cart(self, request, pk=None):
         if request.method == 'POST':
             return self.add(request, ShoppingCart, pk)
-        else:
-            return self.remove(request, ShoppingCart, pk)
+        return self.remove(request, ShoppingCart, pk)
 
     @action(detail=False, methods=['GET'], url_path='cart')
     def shopping_cart(self, request):
@@ -158,10 +156,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         file = io.StringIO()
         file.write('Shopping list:\n')
-        for i, ingr in enumerate(summarized_ingredients):
-            name: str = ingr.get('ingredient__name')
-            units: str = ingr.get('ingredient__measurement_unit')
-            amount: int = ingr.get('amount__sum')
+        for i, ingredient in enumerate(summarized_ingredients):
+            name: str = ingredient.get('ingredient__name')
+            units: str = ingredient.get('ingredient__measurement_unit')
+            amount: int = ingredient.get('amount__sum')
             new_line = f'{i + 1}. {name} ({units}) — {amount}\n'
             file.write(new_line)
 
