@@ -51,13 +51,18 @@ docker compose up
 docker compose exec backend python manage.py makemigrations
 docker compose exec backend python manage.py migrate
 ```
-6. Create **superuser**:
+6. Import ingredients:
+```bash
+docker cp data foodgram-project-react-backend-1://../backend_static
+docker compose exec backend python manage.py add_ingredients
+```
+7. Create **superuser**:
 ```bash
 docker compose exec backend python manage.py createsuperuser
 ```
-7. Enter [admin zone](http://localhost:7000/admin/) with admin credentials (you just created it)
-8. Create 3 tags.
-9. Now you can explore the site on http://localhost:7000/
+8. Enter [admin zone](http://localhost:7000/admin/) with admin credentials (you just created it)
+9. Create 3 tags.
+10. Now you can explore the site on http://localhost:7000/
 
 ## Author
 Vladislav Kondrashov
