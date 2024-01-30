@@ -37,8 +37,6 @@ Explore Foodgram on your local machine by following these steps:
 ```bash
 git@github.com:thehallowedfire/foodgram-project-react.git
 ```
-This will clone the project files into a directory called `foodgram-project-react`.
-
 2. Navigate into the directory:
 ```bash
 cd foodgram-project-react
