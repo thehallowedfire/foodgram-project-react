@@ -61,3 +61,5 @@ docker compose exec backend python manage.py createsuperuser
 
 ## Author
 Vladislav Kondrashov
+[GitHub](https://github.com/thehallowedfire/)
+[Telegram](https://t.me/kondrashov_vlad)
