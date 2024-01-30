@@ -59,5 +59,5 @@ docker compose exec backend python manage.py createsuperuser
 8. Create 3 tags.
 9. Now you can explore the site on http://localhost:7000/
 
-### Author
+## Author
 Vladislav Kondrashov
