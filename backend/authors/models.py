@@ -18,13 +18,13 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
 
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
-
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ['id']
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
 
 
 class CustomUserSubscribe(models.Model):
@@ -37,14 +37,14 @@ class CustomUserSubscribe(models.Model):
                                verbose_name='Автор')
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
-    def __str__(self):
-        # Вася Пупкин (ID:5) подписан на пользователя Петя Иванов (ID:3)
-        return (f'{self.user} (ID:{self.user.id}) подписан '
-                f'на пользователя {self.author} (ID:{self.author.id})')
-
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
         ordering = ['-created']
         constraints = [models.UniqueConstraint(fields=['user', 'author'],
                                                name='Unique subscriptions')]
+
+    def __str__(self):
+        # Вася Пупкин (ID:5) подписан на пользователя Петя Иванов (ID:3)
+        return (f'{self.user} (ID:{self.user.id}) подписан '
+                f'на пользователя {self.author} (ID:{self.author.id})')

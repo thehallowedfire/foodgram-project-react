@@ -17,12 +17,12 @@ class Ingredient(models.Model):
     measurement_unit = models.CharField('Единица измерения',
                                         max_length=INGREDIENT_UNIT_MAX_LENGTH)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(models.Model):
@@ -37,12 +37,12 @@ class Tag(models.Model):
                             max_length=TAG_SLUG_MAX_LENGTH,
                             unique=True)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+
+    def __str__(self):
+        return self.name
 
 
 class Recipe(models.Model):
@@ -71,13 +71,13 @@ class Recipe(models.Model):
                                   related_name='recipes',
                                   verbose_name='Теги',)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
         ordering = ['-pub_date']
+
+    def __str__(self):
+        return self.name
 
 
 class RecipeIngredient(models.Model):
@@ -90,11 +90,6 @@ class RecipeIngredient(models.Model):
                                    verbose_name='Ингредиент')
     amount = models.PositiveIntegerField('Кол-во')
 
-    def __str__(self):
-        # Ингредиент мука в рецепте Пирог с яблоками. Кол-во: 350 (г)
-        return (f'Ингредиент {self.ingredient} в рецепте {self.recipe}. '
-                f'Кол-во: {self.amount} ({self.ingredient.measurement_unit})')
-
     class Meta:
         verbose_name = 'Ингредиент в рецепте'
         verbose_name_plural = 'Ингредиенты в рецепте'
@@ -103,6 +98,11 @@ class RecipeIngredient(models.Model):
                 fields=['recipe', 'ingredient'],
                 name='Unique ingredient in recipe')
         ]
+
+    def __str__(self):
+        # Ингредиент мука в рецепте Пирог с яблоками. Кол-во: 350 (г)
+        return (f'Ингредиент {self.ingredient} в рецепте {self.recipe}. '
+                f'Кол-во: {self.amount} ({self.ingredient.measurement_unit})')
 
 
 class Favorite(models.Model):
@@ -115,11 +115,6 @@ class Favorite(models.Model):
                                related_name='favorite',
                                verbose_name='Рецепт')
 
-    def __str__(self):
-        # Рецепт Пирог (ID:5) в избранном у пользователя Вася Пупкин (ID:5)
-        return (f'Рецепт {self.recipe} (ID:{self.recipe.id}) в избранном '
-                f'у пользователя {self.user} (ID:{self.user.id})')
-
     class Meta:
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранное'
@@ -128,6 +123,11 @@ class Favorite(models.Model):
                 fields=['user', 'recipe'],
                 name='Unique users favorite recipe')
         ]
+
+    def __str__(self):
+        # Рецепт Пирог (ID:5) в избранном у пользователя Вася Пупкин (ID:5)
+        return (f'Рецепт {self.recipe} (ID:{self.recipe.id}) в избранном '
+                f'у пользователя {self.user} (ID:{self.user.id})')
 
 
 class ShoppingCart(models.Model):
@@ -140,12 +140,6 @@ class ShoppingCart(models.Model):
                                related_name='shopping_cart',
                                verbose_name='Рецепт')
 
-    def __str__(self):
-        # Рецепт Пирог (ID:5) в списке покупок
-        # у пользователя Вася Пупкин (ID:5)
-        return (f'Рецепт {self.recipe} (ID:{self.recipe.id}) в списке покупок '
-                f'у пользователя {self.user} (ID:{self.user.id})')
-
     class Meta:
         verbose_name = 'Список покупок'
         verbose_name_plural = 'Списки покупок'
@@ -154,3 +148,9 @@ class ShoppingCart(models.Model):
                 fields=['user', 'recipe'],
                 name='Unique recipe in shopping cart')
         ]
+
+    def __str__(self):
+        # Рецепт Пирог (ID:5) в списке покупок
+        # у пользователя Вася Пупкин (ID:5)
+        return (f'Рецепт {self.recipe} (ID:{self.recipe.id}) в списке покупок '
+                f'у пользователя {self.user} (ID:{self.user.id})')
