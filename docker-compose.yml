@@ -29,10 +29,14 @@ services:
     command: cp -r /app/build/. /static/
 
   gateway:
-    build: ./nginx/
+    build: ./infra/
     env_file: .env
     volumes:
       - static:/static
       - media:/media
+    depends_on:
+      - db
+      - backend
+      - frontend
     ports:
       - 7000:80
