@@ -58,3 +58,6 @@ docker compose exec backend python manage.py createsuperuser
 7. Enter [admin zone](http://localhost:7000/admin/) with admin credentials (you just created it)
 8. Create 3 tags.
 9. Now you can explore the site on http://localhost:7000/
+
+### Author
+Vladislav Kondrashov
