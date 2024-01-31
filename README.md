@@ -20,7 +20,7 @@ Foodgram is a diploma project from the Yandex Practicum Python Backend course de
 
 ## Available Endpoints
 
-- API Endpoint: `/api/` - Access the recipe data.
+- API Endpoint: `/api/` - Access the recipe data, tags, ingredients, user info.
 - Admin Interface: `/admin/` - Manage the platform (demo login: `admin@email.com` / `Gfhjkm12345`)
 
 ## Demo
