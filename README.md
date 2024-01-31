@@ -42,27 +42,31 @@ git@github.com:thehallowedfire/foodgram-project-react.git
 cd foodgram-project-react
 ```
 3. Rename `demo.env` file into `.env`. Populate it with your data (optional; do not change `DB_HOST` and `DB_PORT` values).
-4. Compose Docker container (Docker should be installed on your local machine):
+4. Navigate into `infra` directory:
+```bash
+cd infra
+```
+5. Compose Docker container (Docker should be installed on your local machine):
 ```bash
 docker compose up
 ```
-5. Apply migrations:
+6. Apply migrations (in a separate Bash window navigate to the same folder and follow the next steps):
 ```bash
 docker compose exec backend python manage.py makemigrations
 docker compose exec backend python manage.py migrate
 ```
-6. Import ingredients:
+7. Import ingredients:
 ```bash
-docker cp data foodgram-project-react-backend-1://../backend_static
+docker cp ./data infra-backend-1://../backend_static
 docker compose exec backend python manage.py add_ingredients
 ```
-7. Create **superuser**:
+8. Create **superuser**:
 ```bash
 docker compose exec backend python manage.py createsuperuser
 ```
-8. Enter [admin zone](http://localhost:7000/admin/) with admin credentials (you just created it)
-9. Create 3 tags.
-10. Now you can explore the site on http://localhost:7000/
+9. Enter [admin zone](http://localhost:7000/admin/) with admin credentials (you just created it)
+10. Create 3 tags.
+11. Now you can explore the site on http://localhost:7000/
 
 ## Author
 Vladislav Kondrashov
