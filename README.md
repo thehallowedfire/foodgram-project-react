@@ -18,12 +18,12 @@ Foodgram is a diploma project from the Yandex Practicum Python Backend course de
 - **Shopping Cart:** Add ingredients to your cart and download a shopping list with one click.
 - **Subscriptions:** Follow other users and see their recipes conveniently on a dedicated page.
 
-## Features
+## Available Endpoints
 
 - API Endpoint: `/api/` - Access the recipe data.
 - Admin Interface: `/admin/` - Manage the platform (demo login: `admin@email.com` / `Gfhjkm12345`)
 
-## Access
+## Demo
 
 Try Foodgram at: https://myfoodgram.zapto.org/
 
